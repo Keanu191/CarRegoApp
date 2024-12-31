@@ -77,6 +77,9 @@ namespace CarRegoApp
 
                     listBoxRego.Items.Add(regoInput.Text);
 
+                    // Sort
+                    sortList();
+
                     // After the registration plate has been added to the list we will clear the textbox then refocus
                     clearAndRefocus();
                 }
@@ -111,6 +114,10 @@ namespace CarRegoApp
             {
                 regoList.Remove(selectedRego);
                 listBoxRego.Items.Remove(selectedRego);
+
+                // Sort
+                sortList();
+
                 // clear and refocus the textbox
                 clearAndRefocus();
 
@@ -139,6 +146,9 @@ namespace CarRegoApp
                     regoList.Remove(selectedRego);
                     listBoxRego.Items.Remove(selectedRego);
 
+                    // Sort
+                    sortList();
+
                     // clear and refocus the registration plate input textbox
                     clearAndRefocus();
                     toolStripStatusLabel1.Text = $"{selectedRego} has been deleted!";
@@ -163,8 +173,55 @@ namespace CarRegoApp
          */
         private void editRego()
         {
-            regoInput.Text = listBoxRego.SelectedItem.ToString();
+            var selectedIndex = listBoxRego.SelectedIndex;
+
+            // I created this string here so the actual registration plate can be displayed in the messagebox/toolstrip thanks to .GetItemText
+            string selectedRego = listBoxRego.GetItemText(listBoxRego.SelectedItem);
+
+            // Confirmation
+            string message = $"Are you sure that you would like to edit the following Registration Plate: {selectedRego}";
+            const string caption = "Edit Registration Notice";
+            var result = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // If the yes button was pressed then delete the selected registration plate from the listbox and the list<>
+            if (result == DialogResult.Yes)
+            {
+                // Remove the selectedIndex from the list
+                listBoxRego.Items.RemoveAt(selectedIndex);
+                regoList.RemoveAt(selectedIndex);
+
+                // Insert the updated registration plate into the list
+                regoList.Insert(selectedIndex, regoInput.Text);
+                listBoxRego.Items.Insert(selectedIndex, regoInput.Text);
+
+                // Sort
+                sortList();
+
+                // clear/refocus textbox after
+                clearAndRefocus();
+            }
+            else
+            {
+                toolStripStatusLabel1.Text = $"{selectedRego} has not been edited!";
+            }
+
         }
+
+        /*
+         * 6.
+         * RESET: Add a RESET button to clear all the rego plates from the List<>. The ListBox and
+         * TextBox should also be cleared.
+         */
+        private void reset()
+        {
+            // Clear all items in the listbox
+            listBoxRego.Items.Clear();
+
+            // Clear and refocus the textbox
+            clearAndRefocus();
+        }
+
+
         public Form1()
         {
             InitializeComponent();
@@ -194,18 +251,56 @@ namespace CarRegoApp
             regoInput.Focus();
         }
 
+        /*
+         * 7. 
+         * Single Data Display: Create a single click method to do the following:
+         * when a rego plate is selected from the ListBox, the information is displayed
+         * in the TextBox.
+         */
         private void listBoxRego_SelectedIndexChanged(object sender, EventArgs e)
         {
-            /*
+
             try
             {
-                regoInput.Text = listBoxRego.SelectedItem.ToString();
+                /*
+                 * To prevent an NullReferenceException you would want to make sure
+                 * that first make sure that the selected item in the listbox is not null
+                 * meaning that you have to make sure that an item is selected and then
+                 * you would display the selected item as a string in the textbox
+                 */
+                if (listBoxRego.SelectedItem != null)
+                {
+                    regoInput.Text = listBoxRego.SelectedItem.ToString();
+                }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 toolStripStatusLabel1.Text = $"An unexpected error has occured {ex}";
             }
-            */
+
+        }
+
+        /*
+         * 8.
+         * Display and Sort: All the rego plates should be displayed in the ListBox
+         * which is sorted alphabetically using the built-in List.Sort method.
+         * The List<> must be sorted after every List<> process (add, edit, exit, etc).
+         */
+        private void sortList()
+        {
+            regoList.Sort();
+            listBoxRego.Sorted = true;
+        }
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            // Call the editRego() method when the edit button is clicked
+            editRego();
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            // Call the reset() method when the reset button is clicked
+            reset();
         }
     }
 }

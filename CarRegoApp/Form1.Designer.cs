@@ -36,6 +36,8 @@
             label1 = new Label();
             listBoxRego = new ListBox();
             btnDelete = new Button();
+            btnEdit = new Button();
+            btnReset = new Button();
             statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -100,6 +102,7 @@
             listBoxRego.Size = new Size(277, 254);
             listBoxRego.TabIndex = 5;
             listBoxRego.SelectedIndexChanged += listBoxRego_SelectedIndexChanged;
+            listBoxRego.DoubleClick += listBoxRego_DoubleClick;
             // 
             // btnDelete
             // 
@@ -111,11 +114,33 @@
             btnDelete.UseVisualStyleBackColor = true;
             btnDelete.Click += btnDelete_Click;
             // 
+            // btnEdit
+            // 
+            btnEdit.Location = new Point(398, 222);
+            btnEdit.Name = "btnEdit";
+            btnEdit.Size = new Size(112, 34);
+            btnEdit.TabIndex = 7;
+            btnEdit.Text = "Edit";
+            btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEdit_Click;
+            // 
+            // btnReset
+            // 
+            btnReset.Location = new Point(456, 315);
+            btnReset.Name = "btnReset";
+            btnReset.Size = new Size(112, 34);
+            btnReset.TabIndex = 8;
+            btnReset.Text = "Reset";
+            btnReset.UseVisualStyleBackColor = true;
+            btnReset.Click += btnReset_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnReset);
+            Controls.Add(btnEdit);
             Controls.Add(btnDelete);
             Controls.Add(listBoxRego);
             Controls.Add(label1);
@@ -142,5 +167,7 @@
         private Label label1;
         private ListBox listBoxRego;
         private Button btnDelete;
+        private Button btnEdit;
+        private Button btnReset;
     }
 }
