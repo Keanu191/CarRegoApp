@@ -298,22 +298,28 @@ namespace CarRegoApp
          * displayed, and the TextBox cleared, and the cursor refocused.
          */
 
-        private void linearSearchCheck()
+        private void linearSearch(string target)
         {
             // First check if the textbox is not null
             if (regoInput != null)
             {
-                
+                // Perform linear search
 
+                for (int i = 0; i < regoList.Count; i++)
+                {
+                    if (regoList[i] == target) ;
+                }
+
+                var index = regoList.LastIndexOf(target);
 
                 if (regoList.Contains(regoInput.Text))
                 {
-                    toolStripStatusLabel1.Text = $"Registration plate successfully found! Index: ";
+                    toolStripStatusLabel1.Text = $"Registration plate successfully found! Plate: {target}, Index: {index}";
                     clearAndRefocus();
                 }
                 else
                 {
-                    toolStripStatusLabel1.Text = $"Binary Search unsuccessful, could not find the following Index: ";
+                    toolStripStatusLabel1.Text = $"Binary Search unsuccessful, could not find the following Registration Plate: {target}, Index: {index}";
                     clearAndRefocus();
                 }
             }
@@ -364,6 +370,12 @@ namespace CarRegoApp
         {
             // Call the binary search method when the binary search button is clicked
             binarySearch();
+        }
+
+        private void btnLinearSearch_Click(object sender, EventArgs e)
+        {
+            // Call the linear search method when the linear search button is clicked and I have made sure to set the target parameter in that method as the textbox
+            linearSearch(target: regoInput.Text);
         }
     }
 }

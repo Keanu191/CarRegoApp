@@ -39,14 +39,16 @@
             btnEdit = new Button();
             btnReset = new Button();
             btnBinarySearch = new Button();
+            btnLinearSearch = new Button();
             statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // btnOpen
             // 
-            btnOpen.Location = new Point(12, 12);
+            btnOpen.Location = new Point(8, 7);
+            btnOpen.Margin = new Padding(2, 2, 2, 2);
             btnOpen.Name = "btnOpen";
-            btnOpen.Size = new Size(138, 36);
+            btnOpen.Size = new Size(97, 22);
             btnOpen.TabIndex = 0;
             btnOpen.Text = "Open Text File";
             btnOpen.UseVisualStyleBackColor = true;
@@ -56,30 +58,33 @@
             // 
             statusStrip1.ImageScalingSize = new Size(24, 24);
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
-            statusStrip1.Location = new Point(0, 418);
+            statusStrip1.Location = new Point(0, 248);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(800, 32);
+            statusStrip1.Padding = new Padding(1, 0, 10, 0);
+            statusStrip1.Size = new Size(560, 22);
             statusStrip1.TabIndex = 1;
             statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new Size(179, 25);
+            toolStripStatusLabel1.Size = new Size(118, 17);
             toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // regoInput
             // 
-            regoInput.Location = new Point(213, 86);
+            regoInput.Location = new Point(149, 52);
+            regoInput.Margin = new Padding(2, 2, 2, 2);
             regoInput.Name = "regoInput";
-            regoInput.Size = new Size(150, 31);
+            regoInput.Size = new Size(106, 23);
             regoInput.TabIndex = 2;
             // 
             // btnEnter
             // 
-            btnEnter.Location = new Point(369, 86);
+            btnEnter.Location = new Point(258, 52);
+            btnEnter.Margin = new Padding(2, 2, 2, 2);
             btnEnter.Name = "btnEnter";
-            btnEnter.Size = new Size(112, 34);
+            btnEnter.Size = new Size(78, 20);
             btnEnter.TabIndex = 3;
             btnEnter.Text = "Enter";
             btnEnter.UseVisualStyleBackColor = true;
@@ -88,28 +93,31 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 86);
+            label1.Location = new Point(8, 52);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new Size(195, 25);
+            label1.Size = new Size(129, 15);
             label1.TabIndex = 4;
             label1.Text = "Enter registration plate:";
             // 
             // listBoxRego
             // 
             listBoxRego.FormattingEnabled = true;
-            listBoxRego.ItemHeight = 25;
-            listBoxRego.Location = new Point(21, 133);
+            listBoxRego.ItemHeight = 15;
+            listBoxRego.Location = new Point(15, 80);
+            listBoxRego.Margin = new Padding(2, 2, 2, 2);
             listBoxRego.Name = "listBoxRego";
-            listBoxRego.Size = new Size(277, 254);
+            listBoxRego.Size = new Size(195, 154);
             listBoxRego.TabIndex = 5;
             listBoxRego.SelectedIndexChanged += listBoxRego_SelectedIndexChanged;
             listBoxRego.DoubleClick += listBoxRego_DoubleClick;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(514, 181);
+            btnDelete.Location = new Point(273, 8);
+            btnDelete.Margin = new Padding(2, 2, 2, 2);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(112, 34);
+            btnDelete.Size = new Size(78, 20);
             btnDelete.TabIndex = 6;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
@@ -117,9 +125,10 @@
             // 
             // btnEdit
             // 
-            btnEdit.Location = new Point(398, 222);
+            btnEdit.Location = new Point(109, 7);
+            btnEdit.Margin = new Padding(2, 2, 2, 2);
             btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(112, 34);
+            btnEdit.Size = new Size(78, 20);
             btnEdit.TabIndex = 7;
             btnEdit.Text = "Edit";
             btnEdit.UseVisualStyleBackColor = true;
@@ -127,9 +136,10 @@
             // 
             // btnReset
             // 
-            btnReset.Location = new Point(456, 315);
+            btnReset.Location = new Point(191, 7);
+            btnReset.Margin = new Padding(2, 2, 2, 2);
             btnReset.Name = "btnReset";
-            btnReset.Size = new Size(112, 34);
+            btnReset.Size = new Size(78, 20);
             btnReset.TabIndex = 8;
             btnReset.Text = "Reset";
             btnReset.UseVisualStyleBackColor = true;
@@ -137,19 +147,31 @@
             // 
             // btnBinarySearch
             // 
-            btnBinarySearch.Location = new Point(590, 249);
+            btnBinarySearch.Location = new Point(430, 22);
+            btnBinarySearch.Margin = new Padding(2, 2, 2, 2);
             btnBinarySearch.Name = "btnBinarySearch";
-            btnBinarySearch.Size = new Size(170, 37);
+            btnBinarySearch.Size = new Size(119, 22);
             btnBinarySearch.TabIndex = 9;
             btnBinarySearch.Text = "Binary Search";
             btnBinarySearch.UseVisualStyleBackColor = true;
             btnBinarySearch.Click += btnBinarySearch_Click;
             // 
+            // btnLinearSearch
+            // 
+            btnLinearSearch.Location = new Point(430, 52);
+            btnLinearSearch.Name = "btnLinearSearch";
+            btnLinearSearch.Size = new Size(119, 23);
+            btnLinearSearch.TabIndex = 10;
+            btnLinearSearch.Text = "Linear Search";
+            btnLinearSearch.UseVisualStyleBackColor = true;
+            btnLinearSearch.Click += btnLinearSearch_Click;
+            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(560, 270);
+            Controls.Add(btnLinearSearch);
             Controls.Add(btnBinarySearch);
             Controls.Add(btnReset);
             Controls.Add(btnEdit);
@@ -160,6 +182,7 @@
             Controls.Add(regoInput);
             Controls.Add(statusStrip1);
             Controls.Add(btnOpen);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
@@ -182,5 +205,6 @@
         private Button btnEdit;
         private Button btnReset;
         private Button btnBinarySearch;
+        private Button btnLinearSearch;
     }
 }
