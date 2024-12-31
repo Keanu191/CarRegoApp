@@ -1,3 +1,5 @@
+using System.Windows.Forms;
+
 namespace CarRegoApp
 {
     public partial class Form1 : Form
@@ -63,22 +65,25 @@ namespace CarRegoApp
             // If the text in the textbox is not null...
             if (!string.IsNullOrWhiteSpace(regoInput.Text))
             {
-                // then add the string from the textbox into the list<>
-                regoList.Add(regoInput.Text);
+                // Check if duplicate registration plates have been entered into the ListBox
+                if (listBoxRego.Items.Contains(regoInput.Text))
+                {
+                    toolStripStatusLabel1.Text = "ERROR: Duplicate registration plate entered!";
+                }
+                else
+                {
+                    // If no duplicate registration plates are in the listbox then add the string from the textbox into the list<>
+                    regoList.Add(regoInput.Text);
 
-                // After the registration plate has been added to the list we will clear the textbox then refocus
-                regoInput.Clear();
-                regoInput.Focus();
+                    listBoxRego.Items.Add(regoInput.Text);
+
+                    // After the registration plate has been added to the list we will clear the textbox then refocus
+                    clearAndRefocus();
+                }
             }
             else
             {
                 toolStripStatusLabel1.Text = "ERROR: The Input Textbox is empty, therefore nothing could be entered!";
-            }
-
-            // Check if duplicate registration plates have been entered into the List<>
-            if (regoList.Contains(regoInput.Text))
-            {
-                toolStripStatusLabel1.Text = "ERROR: Duplicate registration plate entered!";
             }
         }
 
@@ -90,9 +95,75 @@ namespace CarRegoApp
          * a rego plate from the ListBox and click the EXIT button. The rego plate will be removed from
          * the List<> and the TextBox will be cleared, and the cursor will refocus in the TextBox.
          */
-        private void removeRego()
-        {
 
+        private void listBoxRego_DoubleClick(object sender, EventArgs e)
+        {
+            // using the .GetItemText method for the selected item in the listbox to display the actual registration plate in the messages
+            string? selectedRego = listBoxRego.GetItemText(listBoxRego.SelectedItem);
+
+            // Confirmation
+            string message = $"Are you sure that you would like to delete the following Registration Plate: {selectedRego}";
+            const string caption = "Authorise Deletion";
+            var result = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // If the yes button was pressed then delete the selected registration plate
+            if (result == DialogResult.Yes)
+            {
+                regoList.Remove(selectedRego);
+                listBoxRego.Items.Remove(selectedRego);
+                // clear and refocus the textbox
+                clearAndRefocus();
+
+                toolStripStatusLabel1.Text = $"{selectedRego} has been successfully deleted";
+            }
+            else if (result == DialogResult.No)
+            {
+                toolStripStatusLabel1.Text = $"The following registration plate: {selectedRego} was not deleted!";
+            }
+        }
+
+        private void deleteRego()
+        {
+            string? selectedRego = listBoxRego.GetItemText(listBoxRego.SelectedItem);
+
+            if (listBoxRego.SelectedItem != null)
+            {
+                // Confirmation
+                string message = $"Are you sure that you would like to delete the following Registration Plate: {selectedRego}";
+                const string caption = "Authorise Deletion";
+                var result = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                // If the yes button was pressed then delete the selected registration plate from the listbox and the list<>
+                if (result == DialogResult.Yes)
+                {
+                    regoList.Remove(selectedRego);
+                    listBoxRego.Items.Remove(selectedRego);
+
+                    // clear and refocus the registration plate input textbox
+                    clearAndRefocus();
+                    toolStripStatusLabel1.Text = $"{selectedRego} has been deleted!";
+                }
+                else if (result == DialogResult.No)
+                {
+                    toolStripStatusLabel1.Text = $"The following registration plate: {selectedRego} was not deleted!";
+                }
+            }
+            else
+            {
+                toolStripStatusLabel1.Text = "You need to select a registration plate in the listbox to delete!";
+            }
+
+        }
+
+        /*
+         * 5. 
+         * EDIT: To edit a rego plate click (select) an item from the ListBox so that it appears in the TextBox.
+         * Alter the information and click the EDIT button. The updated information is written back to the List<>
+         * and the TextBox is cleared, and the cursor refocus in the TextBox.
+         */
+        private void editRego()
+        {
+            regoInput.Text = listBoxRego.SelectedItem.ToString();
         }
         public Form1()
         {
@@ -110,5 +181,31 @@ namespace CarRegoApp
             openTextFile();
         }
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            // Call the deleteRego() method when the delete button is clicked
+            deleteRego();
+        }
+
+        // A function to clear and refocus the registration input textbox
+        private void clearAndRefocus()
+        {
+            regoInput.Clear();
+            regoInput.Focus();
+        }
+
+        private void listBoxRego_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            /*
+            try
+            {
+                regoInput.Text = listBoxRego.SelectedItem.ToString();
+            }
+            catch (Exception ex) 
+            {
+                toolStripStatusLabel1.Text = $"An unexpected error has occured {ex}";
+            }
+            */
+        }
     }
 }

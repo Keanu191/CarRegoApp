@@ -34,7 +34,8 @@
             regoInput = new TextBox();
             btnEnter = new Button();
             label1 = new Label();
-            listBox1 = new ListBox();
+            listBoxRego = new ListBox();
+            btnDelete = new Button();
             statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -90,21 +91,33 @@
             label1.TabIndex = 4;
             label1.Text = "Enter registration plate:";
             // 
-            // listBox1
+            // listBoxRego
             // 
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 25;
-            listBox1.Location = new Point(21, 133);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(277, 254);
-            listBox1.TabIndex = 5;
+            listBoxRego.FormattingEnabled = true;
+            listBoxRego.ItemHeight = 25;
+            listBoxRego.Location = new Point(21, 133);
+            listBoxRego.Name = "listBoxRego";
+            listBoxRego.Size = new Size(277, 254);
+            listBoxRego.TabIndex = 5;
+            listBoxRego.SelectedIndexChanged += listBoxRego_SelectedIndexChanged;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(514, 181);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(112, 34);
+            btnDelete.TabIndex = 6;
+            btnDelete.Text = "Delete";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(listBox1);
+            Controls.Add(btnDelete);
+            Controls.Add(listBoxRego);
             Controls.Add(label1);
             Controls.Add(btnEnter);
             Controls.Add(regoInput);
@@ -127,6 +140,7 @@
         private TextBox regoInput;
         private Button btnEnter;
         private Label label1;
-        private ListBox listBox1;
+        private ListBox listBoxRego;
+        private Button btnDelete;
     }
 }
