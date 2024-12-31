@@ -38,6 +38,7 @@
             btnDelete = new Button();
             btnEdit = new Button();
             btnReset = new Button();
+            btnBinarySearch = new Button();
             statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -134,11 +135,22 @@
             btnReset.UseVisualStyleBackColor = true;
             btnReset.Click += btnReset_Click;
             // 
+            // btnBinarySearch
+            // 
+            btnBinarySearch.Location = new Point(590, 249);
+            btnBinarySearch.Name = "btnBinarySearch";
+            btnBinarySearch.Size = new Size(170, 37);
+            btnBinarySearch.TabIndex = 9;
+            btnBinarySearch.Text = "Binary Search";
+            btnBinarySearch.UseVisualStyleBackColor = true;
+            btnBinarySearch.Click += btnBinarySearch_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnBinarySearch);
             Controls.Add(btnReset);
             Controls.Add(btnEdit);
             Controls.Add(btnDelete);
@@ -169,5 +181,6 @@
         private Button btnDelete;
         private Button btnEdit;
         private Button btnReset;
+        private Button btnBinarySearch;
     }
 }

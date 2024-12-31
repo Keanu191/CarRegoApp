@@ -221,36 +221,6 @@ namespace CarRegoApp
             clearAndRefocus();
         }
 
-
-        public Form1()
-        {
-            InitializeComponent();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnOpen_Click(object sender, EventArgs e)
-        {
-            // Call the openTextFile() method when the open button is clicked
-            openTextFile();
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            // Call the deleteRego() method when the delete button is clicked
-            deleteRego();
-        }
-
-        // A function to clear and refocus the registration input textbox
-        private void clearAndRefocus()
-        {
-            regoInput.Clear();
-            regoInput.Focus();
-        }
-
         /*
          * 7. 
          * Single Data Display: Create a single click method to do the following:
@@ -291,6 +261,93 @@ namespace CarRegoApp
             regoList.Sort();
             listBoxRego.Sorted = true;
         }
+
+        /*
+         * 9.
+         * Binary Search: To find a specific rego plate the user will type the information
+         * into the TextBox and click the BINARY SEARCH button. If the rego plate is found,
+         * then a confirmation message should be displayed. If the rego plate is not found,
+         * then a message should be displayed, and the TextBox cleared, and the cursor refocused.
+         * The search code must use the built-in Binary Search.
+         */
+        private void binarySearch()
+        {
+            // First check if the textbox is not null
+            if (regoInput != null)
+            {
+                var index = regoList.BinarySearch(regoInput.Text);
+
+                if (regoList.Contains(regoInput.Text))
+                {
+                    toolStripStatusLabel1.Text = $"Registration plate successfully found! Index: {index}";
+                    clearAndRefocus();
+                }
+                else
+                {
+                    toolStripStatusLabel1.Text = $"Binary Search unsuccessful, could not find the following Index: {index}";
+                    clearAndRefocus();
+                }
+            }
+        }
+
+        /*
+         * 10.
+         * Linear Search: Add a second search button that implements a linear search algorithm.
+         * To find a rego plate the user will type the information into the TextBox and click 
+         * the LINEAR SEARCH button. If the rego plate is not found, then a message should be 
+         * displayed, and the TextBox cleared, and the cursor refocused.
+         */
+
+        private void linearSearchCheck()
+        {
+            // First check if the textbox is not null
+            if (regoInput != null)
+            {
+                
+
+
+                if (regoList.Contains(regoInput.Text))
+                {
+                    toolStripStatusLabel1.Text = $"Registration plate successfully found! Index: ";
+                    clearAndRefocus();
+                }
+                else
+                {
+                    toolStripStatusLabel1.Text = $"Binary Search unsuccessful, could not find the following Index: ";
+                    clearAndRefocus();
+                }
+            }
+        }
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            // Call the openTextFile() method when the open button is clicked
+            openTextFile();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            // Call the deleteRego() method when the delete button is clicked
+            deleteRego();
+        }
+
+        // A function to clear and refocus the registration input textbox
+        private void clearAndRefocus()
+        {
+            regoInput.Clear();
+            regoInput.Focus();
+        }
+
+
         private void btnEdit_Click(object sender, EventArgs e)
         {
             // Call the editRego() method when the edit button is clicked
@@ -301,6 +358,12 @@ namespace CarRegoApp
         {
             // Call the reset() method when the reset button is clicked
             reset();
+        }
+
+        private void btnBinarySearch_Click(object sender, EventArgs e)
+        {
+            // Call the binary search method when the binary search button is clicked
+            binarySearch();
         }
     }
 }
