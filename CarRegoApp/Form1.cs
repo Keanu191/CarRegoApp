@@ -1,4 +1,5 @@
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace CarRegoApp
 {
@@ -22,7 +23,7 @@ namespace CarRegoApp
             using (OpenFileDialog openTXTFile = new OpenFileDialog())
             {
                 // Set the initial directory for the window file dialog to be on the C Drive directory
-                openTXTFile.InitialDirectory = "C:\\";
+                openTXTFile.InitialDirectory = @"C:\\";
                 // Set the filter for only text files to be selected when the file dialog window opens
                 openTXTFile.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
                 openTXTFile.FilterIndex = 2;
@@ -39,6 +40,9 @@ namespace CarRegoApp
                     using (StreamReader reader = new StreamReader(fileStream))
                     {
                         fileContent = reader.ReadToEnd();
+                        
+                        regoList.Add(fileContent);
+                        listBoxRego.Items.Add(fileContent + "\r\n");
                     }
                 }
             }
@@ -324,6 +328,35 @@ namespace CarRegoApp
                 }
             }
         }
+
+        /*
+         * 11.
+         * Save and Form Close: Create a method to save the data, this method will open a save dialog box and allow
+         * the user to save all the rego plate data into a text file. The dialog box must have a filter to display
+         * text files only. Create a SAVE button method that can utilise the save method. Create a FORM closing 
+         * method using the save method so all data from the List<> will be written back to a single text file
+         * called "demo_###.txt" file which is auto incremented (ie demo_01.txt, demo_02.txt, etc).
+         */
+        private void saveData()
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.InitialDirectory = @"C:\";
+            saveFileDialog1.Title = "Save text Files";
+            saveFileDialog1.CheckFileExists = true;
+            saveFileDialog1.CheckPathExists = true;
+            saveFileDialog1.DefaultExt = "txt";
+            saveFileDialog1.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                int fileCount = 0;
+                string fileName = $"File_0 + {fileCount}";
+
+                fileName = $"File_0 + {fileCount}.txt";
+                fileCount++;
+            }
+        }
         public Form1()
         {
             InitializeComponent();
@@ -376,6 +409,12 @@ namespace CarRegoApp
         {
             // Call the linear search method when the linear search button is clicked and I have made sure to set the target parameter in that method as the textbox
             linearSearch(target: regoInput.Text);
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            // Call the save data method when the save text file button is clicked
+            saveData();
         }
     }
 }
