@@ -39,16 +39,19 @@ namespace CarRegoApp
 
                     using (StreamReader reader = new StreamReader(fileStream))
                     {
-                        fileContent = reader.ReadToEnd();
-                        
-                        regoList.Add(fileContent);
-                        listBoxRego.Items.Add(fileContent + "\r\n");
+                        string? line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            regoList.Add(line.Trim());
+                            listBoxRego.Items.Add(line.Trim());
+                        }
+
                     }
                 }
             }
 
             // display the file content and the path of the file in the status strip
-            toolStripStatusLabel1.Text = $"{fileContent}, File Content at path: {filePath}";
+            toolStripStatusLabel1.Text = $"Text file successfully loaded at: {filePath}";
         }
 
         /*
@@ -79,7 +82,7 @@ namespace CarRegoApp
                     // If no duplicate registration plates are in the listbox then add the string from the textbox into the list<>
                     regoList.Add(regoInput.Text);
 
-                    listBoxRego.Items.Add(regoInput.Text);
+                    listBoxRego.Items.Add(regoInput.Text.Trim());
 
                     // Sort
                     sortList();
@@ -114,7 +117,7 @@ namespace CarRegoApp
             var result = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // If the yes button was pressed then delete the selected registration plate
-            if (result == DialogResult.Yes)
+            if (result == DialogResult.Yes && selectedRego != null)
             {
                 regoList.Remove(selectedRego);
                 listBoxRego.Items.Remove(selectedRego);
@@ -145,7 +148,7 @@ namespace CarRegoApp
                 var result = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 // If the yes button was pressed then delete the selected registration plate from the listbox and the list<>
-                if (result == DialogResult.Yes)
+                if (result == DialogResult.Yes && selectedRego != null)
                 {
                     regoList.Remove(selectedRego);
                     listBoxRego.Items.Remove(selectedRego);
@@ -180,7 +183,7 @@ namespace CarRegoApp
             var selectedIndex = listBoxRego.SelectedIndex;
 
             // I created this string here so the actual registration plate can be displayed in the messagebox/toolstrip thanks to .GetItemText
-            string selectedRego = listBoxRego.GetItemText(listBoxRego.SelectedItem);
+            string? selectedRego = listBoxRego.GetItemText(listBoxRego.SelectedItem);
 
             // Confirmation
             string message = $"Are you sure that you would like to edit the following Registration Plate: {selectedRego}";
@@ -311,23 +314,25 @@ namespace CarRegoApp
 
                 for (int i = 0; i < regoList.Count; i++)
                 {
-                    if (regoList[i] == target) ;
-                }
+                    if (regoList[i] == target)
+                    {
+                        var index = regoList.LastIndexOf(target);
 
-                var index = regoList.LastIndexOf(target);
-
-                if (regoList.Contains(regoInput.Text))
-                {
-                    toolStripStatusLabel1.Text = $"Registration plate successfully found! Plate: {target}, Index: {index}";
-                    clearAndRefocus();
-                }
-                else
-                {
-                    toolStripStatusLabel1.Text = $"Binary Search unsuccessful, could not find the following Registration Plate: {target}, Index: {index}";
-                    clearAndRefocus();
+                        if (regoList.Contains(regoInput.Text))
+                        {
+                            toolStripStatusLabel1.Text = $"Registration plate successfully found! Plate: {target}, Index: {index}";
+                            clearAndRefocus();
+                        }
+                        else
+                        {
+                            toolStripStatusLabel1.Text = $"Binary Search unsuccessful, could not find the following Registration Plate: {target}, Index: {index}";
+                            clearAndRefocus();
+                        }
+                    }
                 }
             }
         }
+
 
         /*
          * 11.
@@ -339,22 +344,58 @@ namespace CarRegoApp
          */
         private void saveData()
         {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.InitialDirectory = @"C:\";
-            saveFileDialog1.Title = "Save text Files";
-            saveFileDialog1.CheckFileExists = true;
-            saveFileDialog1.CheckPathExists = true;
-            saveFileDialog1.DefaultExt = "txt";
-            saveFileDialog1.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-            saveFileDialog1.FilterIndex = 2;
-            saveFileDialog1.RestoreDirectory = true;
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
+                string filePath = @"C:\\";
                 int fileCount = 0;
-                string fileName = $"File_0 + {fileCount}";
+                string fileName = "File_0" + $"{fileCount}";
 
-                fileName = $"File_0 + {fileCount}.txt";
-                fileCount++;
+                bool checkFileName = true;
+                while (checkFileName)
+                {
+                    fileName = "File_0" + $"{fileCount}.txt";
+                    fileCount++;
+
+                    string checkName = filePath + @"\\" + fileName;
+                    checkFileName = File.Exists(checkName);
+                }
+
+                saveFileDialog.FileName = fileName;
+                saveFileDialog.Title = "Export Registration Plate Data";
+                saveFileDialog.InitialDirectory = $"{filePath}";
+                saveFileDialog.CheckPathExists = true;
+                saveFileDialog.DefaultExt = "txt";
+                saveFileDialog.Filter = "Text files |*.txt";
+                saveFileDialog.RestoreDirectory = true;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    using (StreamWriter sw = new StreamWriter(saveFileDialog.OpenFile()))
+                    {
+                        foreach (string item in listBoxRego.Items)
+                        {
+                            sw.WriteLine(item);
+                        }
+                    }
+                }
+            }
+
+
+        }
+
+        /*
+         * 12.
+         * TAG: Create tag method and associated TAG button to mark a rego plate.
+         * When a rego plate is selected from the ListBox and “tagged” an additional character value “z” will be prefixed to the rego plate.
+         * If a ‘’tagged” plate is selected, then the “z” is removed. The List<> will be re-sorted and displayed after each action.
+         */
+        private void tagRego()
+        {
+            var selectedItem = listBoxRego.SelectedItem;
+            if (selectedItem != null)
+            {
+                var i = listBoxRego.Items.Count - 1;  // crash bug if there is no line to append to
+                listBoxRego.Items[i] = listBoxRego.Items[i] + "z";
             }
         }
         public Form1()
@@ -415,6 +456,12 @@ namespace CarRegoApp
         {
             // Call the save data method when the save text file button is clicked
             saveData();
+        }
+
+        private void btnTag_Click(object sender, EventArgs e)
+        {
+            // Call the tag rego function when the tag button is clicked
+            tagRego();
         }
     }
 }
