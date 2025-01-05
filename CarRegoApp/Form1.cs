@@ -1,3 +1,5 @@
+using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -7,6 +9,8 @@ namespace CarRegoApp
     {
         // 1. The prototype must use a List<> data structure of data type "string".
         List<string> regoList = new List<string>();
+
+        Dictionary<string, string> tag = new Dictionary<string, string>();
 
         /*
          * 2.
@@ -305,10 +309,10 @@ namespace CarRegoApp
          * displayed, and the TextBox cleared, and the cursor refocused.
          */
 
-        private void linearSearch(string target)
+        private void linearSearch(string target, int index)
         {
-            // First check if the textbox is not null
-            if (regoInput != null)
+            // First check if the target is not null, (in this case, this will be the rego input textbox)
+            if (target != null)
             {
                 // Perform linear search
 
@@ -316,19 +320,19 @@ namespace CarRegoApp
                 {
                     if (regoList[i] == target)
                     {
-                        var index = regoList.LastIndexOf(target);
-
-                        if (regoList.Contains(regoInput.Text))
-                        {
-                            toolStripStatusLabel1.Text = $"Registration plate successfully found! Plate: {target}, Index: {index}";
-                            clearAndRefocus();
-                        }
-                        else
-                        {
-                            toolStripStatusLabel1.Text = $"Binary Search unsuccessful, could not find the following Registration Plate: {target}, Index: {index}";
-                            clearAndRefocus();
-                        }
+                        index = regoList.LastIndexOf(target);
                     }
+                }
+
+                if (regoList.Contains(regoInput.Text))
+                {
+                    toolStripStatusLabel1.Text = $"Registration plate successfully found! Plate: {target}, Index: {index}";
+                    clearAndRefocus();
+                }
+                else
+                {
+                    toolStripStatusLabel1.Text = $"Linear Search unsuccessful, could not find the following Registration Plate: {target}, Index: {index}";
+                    clearAndRefocus();
                 }
             }
         }
@@ -346,7 +350,7 @@ namespace CarRegoApp
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                string filePath = @"C:\\";
+                string filePath = @"C:\Users\noawa\Source\Repos\Keanu191\CarRegoApp\CarRegoApp\ExportedRegoData\";
                 int fileCount = 0;
                 string fileName = "File_0" + $"{fileCount}";
 
@@ -389,13 +393,17 @@ namespace CarRegoApp
          * When a rego plate is selected from the ListBox and “tagged” an additional character value “z” will be prefixed to the rego plate.
          * If a ‘’tagged” plate is selected, then the “z” is removed. The List<> will be re-sorted and displayed after each action.
          */
-        private void tagRego()
+        private void tagRego(string? selectedItem)
         {
-            var selectedItem = listBoxRego.SelectedItem;
-            if (selectedItem != null)
+            // Create a temporary list to display the tag
+            List<string> tagDisplay = new List<string>();
+            for (int i = 0; i < regoList.Count; i++)
             {
-                var i = listBoxRego.Items.Count - 1;  // crash bug if there is no line to append to
-                listBoxRego.Items[i] = listBoxRego.Items[i] + "z";
+                if (regoList[i] == selectedItem)
+                {
+                    string tag = selectedItem + "z";
+                    tagDisplay.Add(tag);
+                }
             }
         }
         public Form1()
@@ -448,8 +456,8 @@ namespace CarRegoApp
 
         private void btnLinearSearch_Click(object sender, EventArgs e)
         {
-            // Call the linear search method when the linear search button is clicked and I have made sure to set the target parameter in that method as the textbox
-            linearSearch(target: regoInput.Text);
+            // Call the linear search method when the linear search button is clicked and I have made sure to set the target parameter in that method as the textbox in the forms app and the index as the Count of the List<>
+            linearSearch(target: regoInput.Text, index: regoList.Count);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -461,7 +469,7 @@ namespace CarRegoApp
         private void btnTag_Click(object sender, EventArgs e)
         {
             // Call the tag rego function when the tag button is clicked
-            tagRego();
+            tagRego(selectedItem: listBoxRego.SelectedItem?.ToString());
         }
     }
 }
