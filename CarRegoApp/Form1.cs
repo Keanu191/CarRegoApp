@@ -1,5 +1,4 @@
-using System;
-using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -197,13 +196,14 @@ namespace CarRegoApp
             // If the yes button was pressed then delete the selected registration plate from the listbox and the list<>
             if (result == DialogResult.Yes)
             {
-                // Remove the selectedIndex from the list
-                listBoxRego.Items.RemoveAt(selectedIndex);
-                regoList.RemoveAt(selectedIndex);
-
-                // Insert the updated registration plate into the list
-                regoList.Insert(selectedIndex, regoInput.Text);
-                listBoxRego.Items.Insert(selectedIndex, regoInput.Text);
+                for (int i = 0; i < regoList.Count; i++)
+                {
+                    if (regoList.Contains(selectedRego))
+                    {
+                        regoList[i] = selectedIndex.ToString();
+                        listBoxRego.Items[selectedIndex] = regoInput.Text.Trim();
+                    }
+                }
 
                 // Sort
                 sortList();
@@ -348,7 +348,16 @@ namespace CarRegoApp
          */
         private void saveData()
         {
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.InitialDirectory = @"C:\\Desktop";
+            saveFileDialog1.Title = "Save text Files";
+            saveFileDialog1.CheckFileExists = true;
+            saveFileDialog1.CheckPathExists = true;
+            saveFileDialog1.DefaultExt = "txt";
+            saveFileDialog1.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string filePath = @"C:\Users\noawa\Source\Repos\Keanu191\CarRegoApp\CarRegoApp\ExportedRegoData\";
                 int fileCount = 0;
