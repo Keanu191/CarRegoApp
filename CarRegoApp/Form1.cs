@@ -348,16 +348,7 @@ namespace CarRegoApp
          */
         private void saveData()
         {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.InitialDirectory = @"C:\\Desktop";
-            saveFileDialog1.Title = "Save text Files";
-            saveFileDialog1.CheckFileExists = true;
-            saveFileDialog1.CheckPathExists = true;
-            saveFileDialog1.DefaultExt = "txt";
-            saveFileDialog1.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-            saveFileDialog1.FilterIndex = 2;
-            saveFileDialog1.RestoreDirectory = true;
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
                 string filePath = @"C:\Users\noawa\Source\Repos\Keanu191\CarRegoApp\CarRegoApp\ExportedRegoData\";
                 int fileCount = 0;
@@ -393,7 +384,6 @@ namespace CarRegoApp
                 }
             }
 
-
         }
 
         /*
@@ -404,14 +394,11 @@ namespace CarRegoApp
          */
         private void tagRego(string? selectedItem)
         {
-            // Create a temporary list to display the tag
-            List<string> tagDisplay = new List<string>();
             for (int i = 0; i < regoList.Count; i++)
             {
                 if (regoList[i] == selectedItem)
                 {
-                    string tag = selectedItem + "z";
-                    tagDisplay.Add(tag);
+                    listBoxRego.Items[i] = selectedItem.ToString() + "z";
                 }
             }
         }
