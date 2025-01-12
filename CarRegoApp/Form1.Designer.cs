@@ -48,7 +48,7 @@
             // btnOpen
             // 
             btnOpen.Location = new Point(8, 7);
-            btnOpen.Margin = new Padding(2, 2, 2, 2);
+            btnOpen.Margin = new Padding(2);
             btnOpen.Name = "btnOpen";
             btnOpen.Size = new Size(97, 22);
             btnOpen.TabIndex = 0;
@@ -76,15 +76,16 @@
             // regoInput
             // 
             regoInput.Location = new Point(149, 52);
-            regoInput.Margin = new Padding(2, 2, 2, 2);
+            regoInput.Margin = new Padding(2);
             regoInput.Name = "regoInput";
             regoInput.Size = new Size(106, 23);
             regoInput.TabIndex = 2;
+            regoInput.Validating += regoInput_Validating;
             // 
             // btnEnter
             // 
             btnEnter.Location = new Point(258, 52);
-            btnEnter.Margin = new Padding(2, 2, 2, 2);
+            btnEnter.Margin = new Padding(2);
             btnEnter.Name = "btnEnter";
             btnEnter.Size = new Size(78, 20);
             btnEnter.TabIndex = 3;
@@ -107,7 +108,7 @@
             listBoxRego.FormattingEnabled = true;
             listBoxRego.ItemHeight = 15;
             listBoxRego.Location = new Point(15, 80);
-            listBoxRego.Margin = new Padding(2, 2, 2, 2);
+            listBoxRego.Margin = new Padding(2);
             listBoxRego.Name = "listBoxRego";
             listBoxRego.Size = new Size(195, 154);
             listBoxRego.TabIndex = 5;
@@ -117,7 +118,7 @@
             // btnDelete
             // 
             btnDelete.Location = new Point(273, 8);
-            btnDelete.Margin = new Padding(2, 2, 2, 2);
+            btnDelete.Margin = new Padding(2);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(78, 20);
             btnDelete.TabIndex = 6;
@@ -128,7 +129,7 @@
             // btnEdit
             // 
             btnEdit.Location = new Point(109, 7);
-            btnEdit.Margin = new Padding(2, 2, 2, 2);
+            btnEdit.Margin = new Padding(2);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(78, 20);
             btnEdit.TabIndex = 7;
@@ -139,7 +140,7 @@
             // btnReset
             // 
             btnReset.Location = new Point(191, 7);
-            btnReset.Margin = new Padding(2, 2, 2, 2);
+            btnReset.Margin = new Padding(2);
             btnReset.Name = "btnReset";
             btnReset.Size = new Size(78, 20);
             btnReset.TabIndex = 8;
@@ -150,7 +151,7 @@
             // btnBinarySearch
             // 
             btnBinarySearch.Location = new Point(430, 22);
-            btnBinarySearch.Margin = new Padding(2, 2, 2, 2);
+            btnBinarySearch.Margin = new Padding(2);
             btnBinarySearch.Name = "btnBinarySearch";
             btnBinarySearch.Size = new Size(119, 22);
             btnBinarySearch.TabIndex = 9;
@@ -171,7 +172,7 @@
             // btnSave
             // 
             btnSave.Location = new Point(367, 122);
-            btnSave.Margin = new Padding(2, 2, 2, 2);
+            btnSave.Margin = new Padding(2);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(96, 20);
             btnSave.TabIndex = 11;
@@ -207,7 +208,7 @@
             Controls.Add(regoInput);
             Controls.Add(statusStrip1);
             Controls.Add(btnOpen);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;

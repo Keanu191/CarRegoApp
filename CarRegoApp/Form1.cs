@@ -1,4 +1,6 @@
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -68,12 +70,15 @@ namespace CarRegoApp
          */
         private void btnEnter_Click(object sender, EventArgs e)
         {
-            /* 30/12/2024: Note to self: In the future instead of checking if the string in the textbox is null
-             * we can create a regex that is designed to only accept input of a rego plate and then if the if/else statement
-             * we will do like if regex is match then add to the list else the input you entered is not a license plate
-             */
-            // If the text in the textbox is not null...
-            if (!string.IsNullOrWhiteSpace(regoInput.Text))
+            if (ValidateChildren(ValidationConstraints.Enabled))
+            {
+                MessageBox.Show("som");
+            }
+            // Created a regex for Registration Plates
+            Regex regex = new Regex("[0-9]+[A-Za-z]+([+-]?(?=\\.\\d|\\d)(?:\\d+)?(?:\\.?\\d*))(?:[Ee]([+-]?\\d+))?");
+
+            // If the text in the textbox matches the regex...
+            if (regex.IsMatch(regoInput.Text))
             {
                 // Check if duplicate registration plates have been entered into the ListBox
                 if (listBoxRego.Items.Contains(regoInput.Text))
@@ -94,9 +99,9 @@ namespace CarRegoApp
                     clearAndRefocus();
                 }
             }
-            else
+            else if (!regex.IsMatch(regoInput.Text))
             {
-                toolStripStatusLabel1.Text = "ERROR: The Input Textbox is empty, therefore nothing could be entered!";
+                toolStripStatusLabel1.Text = $"ERROR: You must only enter an Australian Registration Plate, {regoInput.Text} is not valid!";
             }
         }
 
@@ -402,23 +407,23 @@ namespace CarRegoApp
         {
             try
             {
-                 // Define the registration plate that will be tagged as a selectedIndex
-                 string taggedIndex = listBoxRego.SelectedIndex.ToString();
+                // Define the registration plate that will be tagged as a selectedIndex
+                string taggedIndex = listBoxRego.SelectedIndex.ToString();
 
-                 /* If the selected index in the listbox is selected and it dosen't start with the tag 'z' then insert the tag
-                  * else if the selected index in the listbox is selected and it does start the the tag 'z' then remove the tag
-                  */
-                 if (taggedIndex != null && !regoInput.Text.StartsWith("z"))
-                 {
-                     regoInput.Text = regoInput.Text.Insert(0, "z");
-                     toolStripStatusLabel1.Text = $"Successfully tagged the registration plate at index: {taggedIndex}";
-                 }
-                 else if (taggedIndex != null && regoInput.Text.StartsWith("z"))
-                 {
+                /* If the selected index in the listbox is selected and it dosen't start with the tag 'z' then insert the tag
+                 * else if the selected index in the listbox is selected and it does start the the tag 'z' then remove the tag
+                 */
+                if (taggedIndex != null && !regoInput.Text.StartsWith("z"))
+                {
+                    regoInput.Text = regoInput.Text.Insert(0, "z");
+                    toolStripStatusLabel1.Text = $"Successfully tagged the registration plate at index: {taggedIndex}";
+                }
+                else if (taggedIndex != null && regoInput.Text.StartsWith("z"))
+                {
                     regoInput.Text = regoInput.Text.Remove(0, 1);
                     toolStripStatusLabel1.Text = $"Successfully untagged the registration plate at index: {taggedIndex}";
-                 }
-            } 
+                }
+            }
             catch (Exception e)
             {
                 MessageBox.Show($"ERROR: {e}");
@@ -460,7 +465,7 @@ namespace CarRegoApp
             {
                 openTextFile();
             }
-            
+
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -511,6 +516,23 @@ namespace CarRegoApp
         {
             // Call the tag rego function when the tag button is clicked
             tagRego();
+        }
+
+        private void regoInput_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ErrorProvider errorProvider = new ErrorProvider();
+            if (string.IsNullOrEmpty(regoInput.Text))
+            {
+                e.Cancel = true;
+                clearAndRefocus();
+                errorProvider.SetError(regoInput, "Please enter a Registration Plate!");
+            }
+            else
+            {
+                e.Cancel = true;
+                errorProvider.SetError(regoInput, null);
+            }
+
         }
     }
 }
