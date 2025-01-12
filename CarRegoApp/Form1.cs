@@ -25,8 +25,8 @@ namespace CarRegoApp
             // In a using statement declare an instance of the OpenFileDialog class called "openTXTFile"
             using (OpenFileDialog openTXTFile = new OpenFileDialog())
             {
-                // Set the initial directory for the window file dialog to be on the C Drive directory
-                openTXTFile.InitialDirectory = @"C:\\";
+                // Set the initial directory to the applications base directory
+                openTXTFile.InitialDirectory = AppContext.BaseDirectory;
                 // Set the filter for only text files to be selected when the file dialog window opens
                 openTXTFile.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
                 openTXTFile.FilterIndex = 2;
@@ -225,11 +225,16 @@ namespace CarRegoApp
          */
         private void reset()
         {
+            // Clear all the items in the list<>
+            regoList.Clear();
+
             // Clear all items in the listbox
             listBoxRego.Items.Clear();
 
             // Clear and refocus the textbox
             clearAndRefocus();
+
+            toolStripStatusLabel1.Text = "Successfully Reset!";
         }
 
         /*
@@ -350,7 +355,8 @@ namespace CarRegoApp
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                string filePath = @"C:\Users\noawa\Source\Repos\Keanu191\CarRegoApp\CarRegoApp\ExportedRegoData\";
+                // Set the filepath for saving the txt files into the applications base directory
+                string filePath = AppContext.BaseDirectory;
                 int fileCount = 0;
                 string fileName = "File_0" + $"{fileCount}";
 
@@ -392,15 +398,32 @@ namespace CarRegoApp
          * When a rego plate is selected from the ListBox and “tagged” an additional character value “z” will be prefixed to the rego plate.
          * If a ‘’tagged” plate is selected, then the “z” is removed. The List<> will be re-sorted and displayed after each action.
          */
-        private void tagRego(string? selectedItem)
+        private void tagRego()
         {
-            for (int i = 0; i < regoList.Count; i++)
+            try
             {
-                if (regoList[i] == selectedItem)
-                {
-                    listBoxRego.Items[i] = selectedItem.ToString() + "z";
-                }
+                 // Define the registration plate that will be tagged as a selectedIndex
+                 string taggedIndex = listBoxRego.SelectedIndex.ToString();
+
+                 /* If the selected index in the listbox is selected and it dosen't start with the tag 'z' then insert the tag
+                  * else if the selected index in the listbox is selected and it does start the the tag 'z' then remove the tag
+                  */
+                 if (taggedIndex != null && !regoInput.Text.StartsWith("z"))
+                 {
+                     regoInput.Text = regoInput.Text.Insert(0, "z");
+                     toolStripStatusLabel1.Text = $"Successfully tagged the registration plate at index: {taggedIndex}";
+                 }
+                 else if (taggedIndex != null && regoInput.Text.StartsWith("z"))
+                 {
+                    regoInput.Text = regoInput.Text.Remove(0, 1);
+                    toolStripStatusLabel1.Text = $"Successfully untagged the registration plate at index: {taggedIndex}";
+                 }
+            } 
+            catch (Exception e)
+            {
+                MessageBox.Show($"ERROR: {e}");
             }
+
         }
         public Form1()
         {
@@ -414,8 +437,30 @@ namespace CarRegoApp
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            // Call the openTextFile() method when the open button is clicked
-            openTextFile();
+            if (listBoxRego.Items.Count != 0)
+            {
+                // Check if user wants to include current data in the List into the data that will be imported into the listbox from the text file
+                string message = "Include current registration plates in the file you're about to open?";
+                const string caption = "Notice";
+                var result = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    // Call the openTextFile() method when the open button is clicked
+                    openTextFile();
+                }
+                else if (result == DialogResult.No)
+                {
+                    reset();
+                    // Call the openTextFile() method when the open button is clicked
+                    openTextFile();
+                }
+            }
+            else if (listBoxRego.Items.Count == 0)
+            {
+                openTextFile();
+            }
+            
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -465,7 +510,7 @@ namespace CarRegoApp
         private void btnTag_Click(object sender, EventArgs e)
         {
             // Call the tag rego function when the tag button is clicked
-            tagRego(selectedItem: listBoxRego.SelectedItem?.ToString());
+            tagRego();
         }
     }
 }
