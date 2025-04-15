@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            // Initialize components
             btnOpen = new Button();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
@@ -42,184 +43,146 @@
             btnLinearSearch = new Button();
             btnSave = new Button();
             btnTag = new Button();
+            titleLabel = new Label();
+            headerPanel = new Panel();
             statusStrip1.SuspendLayout();
             SuspendLayout();
-            // 
-            // btnOpen
-            // 
-            btnOpen.Location = new Point(8, 7);
-            btnOpen.Margin = new Padding(2);
-            btnOpen.Name = "btnOpen";
-            btnOpen.Size = new Size(97, 22);
-            btnOpen.TabIndex = 0;
-            btnOpen.Text = "Open Text File";
-            btnOpen.UseVisualStyleBackColor = true;
-            btnOpen.Click += btnOpen_Click;
-            // 
-            // statusStrip1
-            // 
-            statusStrip1.ImageScalingSize = new Size(24, 24);
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
-            statusStrip1.Location = new Point(0, 248);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Padding = new Padding(1, 0, 10, 0);
-            statusStrip1.Size = new Size(560, 22);
-            statusStrip1.TabIndex = 1;
-            statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new Size(118, 17);
-            toolStripStatusLabel1.Text = "toolStripStatusLabel1";
-            // 
-            // regoInput
-            // 
-            regoInput.Location = new Point(149, 52);
-            regoInput.Margin = new Padding(2);
-            regoInput.Name = "regoInput";
-            regoInput.Size = new Size(106, 23);
-            regoInput.TabIndex = 2;
-            regoInput.Validating += regoInput_Validating;
-            // 
-            // btnEnter
-            // 
-            btnEnter.Location = new Point(258, 52);
-            btnEnter.Margin = new Padding(2);
-            btnEnter.Name = "btnEnter";
-            btnEnter.Size = new Size(78, 20);
-            btnEnter.TabIndex = 3;
-            btnEnter.Text = "Enter";
-            btnEnter.UseVisualStyleBackColor = true;
-            btnEnter.Click += btnEnter_Click;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(8, 52);
-            label1.Margin = new Padding(2, 0, 2, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(129, 15);
-            label1.TabIndex = 4;
-            label1.Text = "Enter registration plate:";
-            // 
-            // listBoxRego
-            // 
-            listBoxRego.FormattingEnabled = true;
-            listBoxRego.ItemHeight = 15;
-            listBoxRego.Location = new Point(15, 80);
-            listBoxRego.Margin = new Padding(2);
-            listBoxRego.Name = "listBoxRego";
-            listBoxRego.Size = new Size(195, 154);
-            listBoxRego.TabIndex = 5;
-            listBoxRego.SelectedIndexChanged += listBoxRego_SelectedIndexChanged;
-            listBoxRego.DoubleClick += listBoxRego_DoubleClick;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Location = new Point(273, 8);
-            btnDelete.Margin = new Padding(2);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(78, 20);
-            btnDelete.TabIndex = 6;
-            btnDelete.Text = "Delete";
-            btnDelete.UseVisualStyleBackColor = true;
-            btnDelete.Click += btnDelete_Click;
-            // 
-            // btnEdit
-            // 
-            btnEdit.Location = new Point(109, 7);
-            btnEdit.Margin = new Padding(2);
-            btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(78, 20);
-            btnEdit.TabIndex = 7;
-            btnEdit.Text = "Edit";
-            btnEdit.UseVisualStyleBackColor = true;
-            btnEdit.Click += btnEdit_Click;
-            // 
-            // btnReset
-            // 
-            btnReset.Location = new Point(191, 7);
-            btnReset.Margin = new Padding(2);
-            btnReset.Name = "btnReset";
-            btnReset.Size = new Size(78, 20);
-            btnReset.TabIndex = 8;
-            btnReset.Text = "Reset";
-            btnReset.UseVisualStyleBackColor = true;
-            btnReset.Click += btnReset_Click;
-            // 
-            // btnBinarySearch
-            // 
-            btnBinarySearch.Location = new Point(430, 22);
-            btnBinarySearch.Margin = new Padding(2);
-            btnBinarySearch.Name = "btnBinarySearch";
-            btnBinarySearch.Size = new Size(119, 22);
-            btnBinarySearch.TabIndex = 9;
-            btnBinarySearch.Text = "Binary Search";
-            btnBinarySearch.UseVisualStyleBackColor = true;
-            btnBinarySearch.Click += btnBinarySearch_Click;
-            // 
-            // btnLinearSearch
-            // 
-            btnLinearSearch.Location = new Point(430, 52);
-            btnLinearSearch.Name = "btnLinearSearch";
-            btnLinearSearch.Size = new Size(119, 23);
-            btnLinearSearch.TabIndex = 10;
-            btnLinearSearch.Text = "Linear Search";
-            btnLinearSearch.UseVisualStyleBackColor = true;
-            btnLinearSearch.Click += btnLinearSearch_Click;
-            // 
-            // btnSave
-            // 
-            btnSave.Location = new Point(367, 122);
-            btnSave.Margin = new Padding(2);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(96, 20);
-            btnSave.TabIndex = 11;
-            btnSave.Text = "Save Text File";
-            btnSave.UseVisualStyleBackColor = true;
-            btnSave.Click += btnSave_Click;
-            // 
-            // btnTag
-            // 
-            btnTag.Location = new Point(422, 200);
-            btnTag.Name = "btnTag";
-            btnTag.Size = new Size(75, 23);
-            btnTag.TabIndex = 12;
-            btnTag.Text = "Tag";
-            btnTag.UseVisualStyleBackColor = true;
-            btnTag.Click += btnTag_Click;
-            // 
-            // Form1
-            // 
+
+            // Form settings
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(560, 270);
-            Controls.Add(btnTag);
-            Controls.Add(btnSave);
-            Controls.Add(btnLinearSearch);
-            Controls.Add(btnBinarySearch);
-            Controls.Add(btnReset);
-            Controls.Add(btnEdit);
-            Controls.Add(btnDelete);
-            Controls.Add(listBoxRego);
-            Controls.Add(label1);
-            Controls.Add(btnEnter);
-            Controls.Add(regoInput);
+            BackColor = Color.WhiteSmoke;
+            ClientSize = new Size(600, 400);
+            Text = "Car Registration Manager";
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+
+            // Header panel
+            headerPanel.BackColor = Color.SteelBlue;
+            headerPanel.Dock = DockStyle.Top;
+            headerPanel.Height = 60;
+            headerPanel.Controls.Add(titleLabel);
+
+            // Title label
+            titleLabel.Text = "Car Registration Manager";
+            titleLabel.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point);
+            titleLabel.ForeColor = Color.White;
+            titleLabel.AutoSize = true;
+            titleLabel.Location = new Point(20, 15);
+
+            // Status strip
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
+            statusStrip1.Location = new Point(0, 380);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(600, 20);
+
+            // Status label
+            toolStripStatusLabel1.Text = "Ready";
+
+            // Registration input
+            regoInput.Location = new Point(20, 80);
+            regoInput.Size = new Size(200, 23);
+            regoInput.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+
+            // Label for registration input
+            label1.Text = "Enter Registration Plate:";
+            label1.Location = new Point(20, 60);
+            label1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+
+            // List box for registration plates
+            listBoxRego.Location = new Point(20, 120);
+            listBoxRego.Size = new Size(200, 200);
+            listBoxRego.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+
+            // Buttons
+            btnOpen.Text = "Open File";
+            btnOpen.Location = new Point(250, 80);
+            btnOpen.Size = new Size(100, 30);
+            btnOpen.BackColor = Color.LightSteelBlue;
+            btnOpen.FlatStyle = FlatStyle.Flat;
+            btnOpen.Click += btnOpen_Click;
+
+            btnSave.Text = "Save File";
+            btnSave.Location = new Point(250, 120);
+            btnSave.Size = new Size(100, 30);
+            btnSave.BackColor = Color.LightSteelBlue;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.Click += btnSave_Click;
+
+            btnEnter.Text = "Add";
+            btnEnter.Location = new Point(250, 160);
+            btnEnter.Size = new Size(100, 30);
+            btnEnter.BackColor = Color.LightGreen;
+            btnEnter.FlatStyle = FlatStyle.Flat;
+            btnEnter.Click += btnEnter_Click;
+
+            btnDelete.Text = "Delete";
+            btnDelete.Location = new Point(250, 200);
+            btnDelete.Size = new Size(100, 30);
+            btnDelete.BackColor = Color.IndianRed;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Click += btnDelete_Click;
+
+            btnEdit.Text = "Edit";
+            btnEdit.Location = new Point(250, 240);
+            btnEdit.Size = new Size(100, 30);
+            btnEdit.BackColor = Color.LightGoldenrodYellow;
+            btnEdit.FlatStyle = FlatStyle.Flat;
+            btnEdit.Click += btnEdit_Click;
+
+            btnReset.Text = "Reset";
+            btnReset.Location = new Point(250, 280);
+            btnReset.Size = new Size(100, 30);
+            btnReset.BackColor = Color.LightCoral;
+            btnReset.FlatStyle = FlatStyle.Flat;
+            btnReset.Click += btnReset_Click;
+
+            btnBinarySearch.Text = "Binary Search";
+            btnBinarySearch.Location = new Point(400, 80);
+            btnBinarySearch.Size = new Size(150, 30);
+            btnBinarySearch.BackColor = Color.LightSkyBlue;
+            btnBinarySearch.FlatStyle = FlatStyle.Flat;
+            btnBinarySearch.Click += btnBinarySearch_Click;
+
+            btnLinearSearch.Text = "Linear Search";
+            btnLinearSearch.Location = new Point(400, 120);
+            btnLinearSearch.Size = new Size(150, 30);
+            btnLinearSearch.BackColor = Color.LightSkyBlue;
+            btnLinearSearch.FlatStyle = FlatStyle.Flat;
+            btnLinearSearch.Click += btnLinearSearch_Click;
+
+            btnTag.Text = "Tag";
+            btnTag.Location = new Point(400, 160);
+            btnTag.Size = new Size(150, 30);
+            btnTag.BackColor = Color.LightPink;
+            btnTag.FlatStyle = FlatStyle.Flat;
+            btnTag.Click += btnTag_Click;
+
+            // Add controls to the form
+            Controls.Add(headerPanel);
             Controls.Add(statusStrip1);
+            Controls.Add(regoInput);
+            Controls.Add(label1);
+            Controls.Add(listBoxRego);
             Controls.Add(btnOpen);
-            Margin = new Padding(2);
-            Name = "Form1";
-            Text = "Form1";
-            Load += Form1_Load;
+            Controls.Add(btnSave);
+            Controls.Add(btnEnter);
+            Controls.Add(btnDelete);
+            Controls.Add(btnEdit);
+            Controls.Add(btnReset);
+            Controls.Add(btnBinarySearch);
+            Controls.Add(btnLinearSearch);
+            Controls.Add(btnTag);
+
             statusStrip1.ResumeLayout(false);
-            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
+        private Panel headerPanel;
+        private Label titleLabel;
         private Button btnOpen;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel toolStripStatusLabel1;
